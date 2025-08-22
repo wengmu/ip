@@ -43,6 +43,49 @@ public class Chia {
                 System.out.println("OK, I've marked this task as not done yet:");
                 System.out.println("  " + t);
 
+            } else if (user_input.startsWith("todo")) {
+                String description = user_input.substring(5).trim();
+                Task t = new Todo(description);
+                task.add(t);
+                System.out.println("Got it. I've added this task:");
+                System.out.println(" " + t);
+                System.out.printf("You have a total of %d in the task list\n", task.size());
+
+            } else if (user_input.startsWith("deadline")) {
+                String main_body = user_input.substring(9).trim();
+
+                int separation = main_body.indexOf(" /by ");
+                String description = (separation == -1)? main_body : main_body.substring(0, separation).trim();
+                String by = (separation == -1)? "" : main_body.substring(separation + 5).trim();
+                Task t = new Deadline(description, by);
+                task.add(t);
+
+                System.out.println("Got it. I've added this task:");
+                System.out.println(" " + t);
+                System.out.printf("Now you have %d tasks in the list.\n", task.size());
+            } else if (user_input.startsWith("event ")) {
+                String main_body = user_input.substring(6).trim();
+                int fromIndex = main_body.indexOf(" /from ");
+                int toIndex = main_body.indexOf(" /to ");
+                String description = main_body;
+                String from = "";
+                String to = "";
+                if (fromIndex != -1) {
+                    description = main_body.substring(0, fromIndex).trim();
+                    if (toIndex != -1 && toIndex > fromIndex) {
+                        from = main_body.substring(fromIndex + 7, toIndex).trim();
+                        to = main_body.substring(toIndex + 5).trim();
+                    } else {
+                        from = main_body.substring(fromIndex + 7).trim();
+                    }
+                }
+
+                Task t = new Event(description, from, to);
+                task.add(t);
+                System.out.println("Got it. I've added this task:");
+                System.out.println("  " + t);
+                System.out.printf("Now you have %d tasks in the list.\n", task.size());
+
             } else if(user_input.equals("sing")) {
                 System.out.println("I get money, I'm a star\n" +
                         "Star, star, star, star, star, star");
