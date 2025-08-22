@@ -44,7 +44,14 @@ public class Chia {
                 System.out.println("  " + t);
 
             } else if (user_input.startsWith("todo")) {
-                String description = user_input.substring(5).trim();
+                String description = user_input.substring(4).trim();
+
+                //handling of errors
+                if (description.isEmpty()) {
+                    System.out.println("Hold up! The description cannot be empty so you SHALL NOT PASS!");
+                    continue;
+                }
+
                 Task t = new Todo(description);
                 task.add(t);
                 System.out.println("Got it. I've added this task:");
@@ -52,7 +59,12 @@ public class Chia {
                 System.out.printf("You have a total of %d in the task list\n", task.size());
 
             } else if (user_input.startsWith("deadline")) {
-                String main_body = user_input.substring(9).trim();
+                String main_body = user_input.substring(8).trim();
+
+                if (main_body.isEmpty()) {
+                    System.out.println("WAIT!!! The description is empty");
+                    continue;
+                }
 
                 int separation = main_body.indexOf(" /by ");
                 String description = (separation == -1)? main_body : main_body.substring(0, separation).trim();
@@ -63,8 +75,14 @@ public class Chia {
                 System.out.println("Got it. I've added this task:");
                 System.out.println(" " + t);
                 System.out.printf("Now you have %d tasks in the list.\n", task.size());
-            } else if (user_input.startsWith("event ")) {
-                String main_body = user_input.substring(6).trim();
+            } else if (user_input.startsWith("event")) {
+                String main_body = user_input.substring(5).trim();
+
+                if (main_body.isEmpty()) {
+                    System.out.println("The description of an event cannot be empty.");
+                    continue;
+                }
+
                 int fromIndex = main_body.indexOf(" /from ");
                 int toIndex = main_body.indexOf(" /to ");
                 String description = main_body;
@@ -93,6 +111,10 @@ public class Chia {
                 Task t = new Task(user_input);
                 task.add(t);
                 System.out.println("added: " + user_input);
+            } else if (user_input.isEmpty()) {
+                continue;
+            } else {
+                System.out.println("What the hell are you even saying??!");
             }
         }
     }
