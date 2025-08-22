@@ -104,7 +104,31 @@ public class Chia {
                 System.out.println("  " + t);
                 System.out.printf("Now you have %d tasks in the list.\n", task.size());
 
-            } else if(user_input.equals("sing")) {
+            } else if(user_input.startsWith("delete ")) {
+                try {
+                    String indexStr = user_input.substring(7).trim();
+                    if (indexStr.isEmpty()) {
+                        System.out.println("Please specify which task you would like to delete.");
+                        continue;
+                    }
+
+                    int index = Integer.parseInt(indexStr) - 1;
+
+                    if (index < 0 || index >= task.size()) {
+                        System.out.println("Task number " + (index + 1) + " does not exist.");
+                        continue;
+                    }
+
+                    Task removedTask = task.remove(index);
+                    System.out.println("Noted. I've removed this task: \n" + " " + removedTask);
+                    System.out.printf("Now you have %d tasks in the list.\n", task.size());
+
+                } catch (NumberFormatException e) {
+                    System.out.println("Please enter a valid task number.");
+                }
+            }
+
+            else if(user_input.equals("sing")) {
                 System.out.println("I get money, I'm a star\n" +
                         "Star, star, star, star, star, star");
             } else if(!user_input.isEmpty()){
