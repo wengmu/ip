@@ -14,7 +14,8 @@ public class Chia {
         System.out.println("What can I help you with? \n");
 
         Scanner sc = new Scanner(System.in);
-        List<Task> task = new ArrayList<>();
+        Storage storage = new Storage();
+        List<Task> task = storage.load();
 
         while(true) {
             String user_input = sc.nextLine().trim();
@@ -33,6 +34,7 @@ public class Chia {
                 int index = Integer.parseInt(user_input.substring(5).trim()) - 1;
                 Task t = task.get(index);
                 t.mark();
+                storage.save(task);
                 System.out.println("Nice! I've marked this task as done:");
                 System.out.println("  " + t);
 
@@ -40,6 +42,7 @@ public class Chia {
                 int idx = Integer.parseInt(user_input.substring(7).trim()) - 1;
                 Task t = task.get(idx);
                 t.unmark();
+                storage.save(task);
                 System.out.println("OK, I've marked this task as not done yet:");
                 System.out.println("  " + t);
 
@@ -54,6 +57,7 @@ public class Chia {
 
                 Task t = new Todo(description);
                 task.add(t);
+                storage.save(task);
                 System.out.println("Got it. I've added this task:");
                 System.out.println(" " + t);
                 System.out.printf("You have a total of %d in the task list\n", task.size());
@@ -71,6 +75,7 @@ public class Chia {
                 String by = (separation == -1)? "" : main_body.substring(separation + 5).trim();
                 Task t = new Deadline(description, by);
                 task.add(t);
+                storage.save(task);
 
                 System.out.println("Got it. I've added this task:");
                 System.out.println(" " + t);
@@ -100,6 +105,7 @@ public class Chia {
 
                 Task t = new Event(description, from, to);
                 task.add(t);
+                storage.save(task);
                 System.out.println("Got it. I've added this task:");
                 System.out.println("  " + t);
                 System.out.printf("Now you have %d tasks in the list.\n", task.size());
@@ -120,6 +126,7 @@ public class Chia {
                     }
 
                     Task removedTask = task.remove(index);
+                    storage.save(task);
                     System.out.println("Noted. I've removed this task: \n" + " " + removedTask);
                     System.out.printf("Now you have %d tasks in the list.\n", task.size());
 
@@ -134,6 +141,7 @@ public class Chia {
             } else if(!user_input.isEmpty()){
                 Task t = new Task(user_input);
                 task.add(t);
+                storage.save(task);
                 System.out.println("added: " + user_input);
             } else if (user_input.isEmpty()) {
                 continue;
