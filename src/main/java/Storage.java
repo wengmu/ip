@@ -22,7 +22,7 @@ public class Storage {
                     line = "T | " + (task.isDone()? "1" : "0") + " | " + task.getDescription();
                 } else if (task instanceof Deadline) {
                     Deadline d = (Deadline) task;
-                    line = "D | " + (task.isDone()? "1" : "0") + " | " + task.getDescription() + " | " + d.getBy();
+                    line = "D | " + (task.isDone()? "1" : "0") + " | " + task.getDescription() + " | " + d.getByFile();
                 } else if (task instanceof Event) {
                     Event e = (Event) task;
                     line = "E | " + (task.isDone()? "1" : "0") + " | " + task.getDescription() + " | " + e.getFrom() + " | " + e.getTo();
