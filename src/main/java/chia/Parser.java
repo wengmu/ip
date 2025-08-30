@@ -1,3 +1,5 @@
+package chia;
+
 public class Parser {
     public static String getCommand(String input) {
         String[] words = input.split(" ");
