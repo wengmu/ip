@@ -1,3 +1,7 @@
+package chia.ui;
+
+import chia.task.Task;
+import chia.TaskList;
 import java.util.Scanner;
 import java.util.List;
 
