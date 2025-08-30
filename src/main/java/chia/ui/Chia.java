@@ -1,11 +1,8 @@
-package chia;
+package chia.ui;
 
+import chia.TaskList;
 import chia.task.*;
-import chia.ui.*;
 import chia.storage.*;
-import java.util.Scanner;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Chia {
     private Storage storage;
