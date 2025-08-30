@@ -39,3 +39,15 @@ shadowJar {
 run{
     standardInput = System.in
 }
+
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    manifest {
+        attributes 'Main-Class': 'chia.ui.Chia'
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    archiveBaseName = 'Chia'
+    archiveVersion = '1.0'
+}
