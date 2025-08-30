@@ -1,10 +1,16 @@
 package chia.storage;
 
-import chia.task.*;
-import java.io.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import chia.task.Deadline;
+import chia.task.Event;
+import chia.task.Task;
+import chia.task.Todo;
 
 public class Storage {
 
@@ -22,24 +28,24 @@ public class Storage {
                 String line = "";
 
                 if (task instanceof Todo) {
-                    line = "T | " + (task.isDone()? "1" : "0") + " | " + task.getDescription();
+                    line = "T | " + (task.isDone() ? "1" : "0") + " | " + task.getDescription();
                 } else if (task instanceof Deadline) {
                     Deadline d = (Deadline) task;
-                    line = "D | " + (task.isDone()? "1" : "0") + " | " + task.getDescription() + " | " + d.getByFile();
+                    line = "D | " + (task.isDone() ? "1" : "0") + " | " + task.getDescription() + " | " + d.getByFile();
                 } else if (task instanceof Event) {
                     Event e = (Event) task;
-                    line = "E | " + (task.isDone()? "1" : "0") + " | " + task.getDescription() + " | " + e.getFrom() + " | " + e.getTo();
+                    line = "E | " + (task.isDone() ? "1" : "0") + " | " + task.getDescription() + " | " + e.getFrom() + " | " + e.getTo();
                 }
 
-                writer.write(line  + "\n");
+                writer.write(line + "\n");
             }
             writer.close();
         } catch (IOException e) {
             System.out.println("Something went wrong! ");
         }
-     }
+    }
 
-     public List<Task> load() {
+    public List<Task> load() {
         List<Task> tasks = new ArrayList<>();
 
         try {
@@ -77,10 +83,10 @@ public class Storage {
             }
             scanner.close();
 
-        } catch(IOException e) {
+        } catch (IOException e) {
 
         }
 
         return tasks;
-     }
+    }
 }

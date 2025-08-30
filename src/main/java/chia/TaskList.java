@@ -1,8 +1,9 @@
 package chia;
 
-import chia.task.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import chia.task.Task;
 
 /**
  * Manages a collection of tasks with operations to add, remove, and retrieve tasks
