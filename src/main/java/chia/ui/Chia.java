@@ -1,8 +1,9 @@
 package chia.ui;
 
 import chia.TaskList;
-import chia.task.*;
-import chia.storage.*;
+import chia.storage.Storage;
+import chia.task.Task;
+import chia.task.Todo;
 
 public class Chia {
     private Storage storage;
@@ -13,6 +14,10 @@ public class Chia {
         ui = new Ui();
         storage = new Storage();
         tasks = new TaskList(storage.load());
+    }
+
+    public static void main(String[] args) {
+        new Chia().run();
     }
 
     public void run() {
@@ -54,9 +59,5 @@ public class Chia {
                 ui.showError("I don't know that command!");
             }
         }
-    }
-
-    public static void main(String[] args) {
-        new Chia().run();
     }
 }

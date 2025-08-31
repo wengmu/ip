@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-public class Deadline extends Task{
+public class Deadline extends Task {
     private LocalDate by;
     private String originalInput;
 
@@ -13,7 +13,7 @@ public class Deadline extends Task{
         try {
             this.by = LocalDate.parse(by);
             this.originalInput = by;
-        } catch(DateTimeParseException e) {
+        } catch (DateTimeParseException e) {
             this.by = null;
             this.originalInput = by;
         }

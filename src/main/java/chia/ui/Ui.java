@@ -1,9 +1,9 @@
 package chia.ui;
 
-import chia.task.Task;
-import chia.TaskList;
 import java.util.Scanner;
-import java.util.List;
+
+import chia.TaskList;
+import chia.task.Task;
 
 public class Ui {
     private Scanner scanner;
@@ -14,11 +14,11 @@ public class Ui {
 
     public void showWelcome() {
         String logo =
-        "   ____ _     _       \n"
-                + "  / ___| |__ (_) __ _ \n"
-                + " | |   | '_ \\| |/ _` |\n"
-                + " | |___| | | | | (_| |\n"
-                + "  \\____|_| |_|_|\\__,_|\n";
+                "   ____ _     _       \n"
+                        + "  / ___| |__ (_) __ _ \n"
+                        + " | |   | '_ \\| |/ _` |\n"
+                        + " | |___| | | | | (_| |\n"
+                        + "  \\____|_| |_|_|\\__,_|\n";
         System.out.println("Hello Sir, I am \n" + logo);
         System.out.println("What can I help you with? \n");
     }
@@ -32,11 +32,11 @@ public class Ui {
     }
 
     public void showList(TaskList tasks) {
-        if(tasks.isEmpty()) {
+        if (tasks.isEmpty()) {
             System.out.println("There is no work to do. Congrats!");
         } else {
-            for(int i = 0; i < tasks.size(); i++) {
-                System.out.printf("%d. %s\n", i+1, tasks.get(i));
+            for (int i = 0; i < tasks.size(); i++) {
+                System.out.printf("%d. %s\n", i + 1, tasks.get(i));
             }
         }
     }
