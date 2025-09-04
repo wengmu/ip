@@ -10,44 +10,44 @@ public class Task {
     private boolean isDone;
 
     /**
-     Creates a new task with the given description.
-     The task is initially marked as not done.
+     * Creates a new task with the given description.
+     * The task is initially marked as not done.
      */
-    public Task(String description){
+    public Task(String description) {
         this.description = description;
         this.isDone = false;
     }
 
     /**
-     Marks the task as completed.
+     * Marks the task as completed.
      */
-    public void mark(){
+    public void mark() {
         this.isDone = true;
     }
 
     /**
-     Marks the task as incompleted.
+     * Marks the task as incompleted.
      */
-    public void unmark(){
+    public void unmark() {
         this.isDone = false;
     }
 
     /**
-     Checks whether this task is completed.
+     * Checks whether this task is completed.
      */
     public boolean isDone() {
         return isDone;
     }
 
     /**
-     Gets the description of this task.
+     * Gets the description of this task.
      */
     public String getDescription() {
         return description;
     }
 
     @Override
-    public String toString(){
-        return "[" + (isDone ? "X": " ") + "] " + this.description;
+    public String toString() {
+        return "[" + (isDone ? "X":" ") + "] " + this.description;
     }
 }

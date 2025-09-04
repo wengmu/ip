@@ -1,12 +1,12 @@
 package chia;
 
 /**
-    class for parsing user input commands.
+ * class for parsing user input commands.
  */
 public class Parser {
     /**
-      Extracts the command word from user input
-      Takes the first word of the input as the command
+      * Extracts the command word from user input
+      * Takes the first word of the input as the command
      */
     public static String getCommand(String input) {
         String[] words = input.split(" ");
