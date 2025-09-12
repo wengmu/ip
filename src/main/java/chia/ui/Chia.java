@@ -1,11 +1,11 @@
 package chia.ui;
 
-import chia.task.Deadline;
-import chia.task.Event;
 import chia.TaskList;
 import chia.storage.Storage;
 import chia.task.Task;
 import chia.task.Todo;
+import chia.task.Deadline;
+import chia.task.Event;
 
 public class Chia {
     private Storage storage;
@@ -18,23 +18,24 @@ public class Chia {
         tasks = new TaskList(storage.load());
     }
 
-    public static void main(String[] args) {
-        new Chia().run();
-    }
-
-    public void run() {
-        ui.showWelcome();
-
-        while (true) {
-            String input = ui.readCommand();
-
+    /**
+     * Generates a response for the user's chat message.
+     */
+    public String getResponse(String input) {
+        try {
             if (input.equals("bye")) {
-                ui.showBye();
-                break;
+                return "Goodbye. Hope you have a great day ahead!";
 
             } else if (input.equals("list")) {
-
-                ui.showList(tasks);
+                if (tasks.size() == 0) {
+                    return "There is no work to do. Congrats!";
+                } else {
+                    StringBuilder result = new StringBuilder("Here are the tasks in your list:\n");
+                    for (int i = 0; i < tasks.size(); i++) {
+                        result.append((i + 1)).append(". ").append(tasks.get(i).toString()).append("\n");
+                    }
+                    return result.toString();
+                }
 
             } else if (input.startsWith("mark ")) {
                 String number = input.substring(5);
@@ -42,63 +43,77 @@ public class Chia {
                 Task task = tasks.get(index);
                 task.mark();
                 storage.save(tasks.getAll());
-                ui.showMarked(task);
+                return "Nice! I've marked this task as done:\n  " + task;
 
-            } else if (input.startsWith("unmark ")) {
-                String number = input.substring(7);
-                int index = Integer.parseInt(number) - 1;
-                Task task = tasks.get(index);
-                task.unmark();
-                storage.save(tasks.getAll());
-                ui.showUnmarked(task);
 
             } else if (input.startsWith("todo ")) {
                 String description = input.substring(5);
+                if (description.isEmpty()) {
+                    return "Hold up! The description cannot be empty so you SHALL NOT PASS!";
+                }
                 Task task = new Todo(description);
                 tasks.add(task);
                 storage.save(tasks.getAll());
-                ui.showAdded(task, tasks.size());
+                return "Got it. I've added this task:\n " + task +
+                        "\nYou have a total of " + tasks.size() + " in the task list";
 
             } else if (input.startsWith("deadline ")) {
-                String details = input.substring(9);
-                int byIndex = details.indexOf(" /by ");
-                if (byIndex == -1) {
-                    ui.showError("Please use format: deadline <description> /by <date>");
-                    continue;
+                String details = input.substring(9).trim();
+                if (details.isEmpty()) {
+                    return "WAIT!!! The description is empty";
                 }
-                String description = details.substring(0, byIndex);
-                String by = details.substring(byIndex + 5);
-                Task task = new Deadline(description, by);
-                tasks.add(task);
+
+                int byIndex = details.indexOf(" /by ");
+                String description = byIndex == -1 ? details : details.substring(0, byIndex).trim();
+                String by = byIndex == -1 ? "" : details.substring(byIndex + 5).trim();
+
+                Deadline deadline = new Deadline(description, by);
+                tasks.add(deadline);
                 storage.save(tasks.getAll());
-                ui.showAdded(task, tasks.size());
+                return "Got it. I've added this task:\n " + deadline +
+                        "\nNow you have " + tasks.size() + " tasks in the list.";
 
             } else if (input.startsWith("event ")) {
-                String details = input.substring(6);
+                String details = input.substring(6).trim();
+                if (details.isEmpty()) {
+                    return "The description of an event cannot be empty.";
+                }
+
                 int fromIndex = details.indexOf(" /from ");
                 int toIndex = details.indexOf(" /to ");
-                if (fromIndex == -1) {
-                    ui.showError("Please use format: event <description> /from <start> /to <end>");
-                    continue;
+                String description = details;
+                String from = "";
+                String to = "";
+
+                if (fromIndex != -1) {
+                    description = details.substring(0, fromIndex).trim();
+                    if (toIndex != -1 && toIndex > fromIndex) {
+                        from = details.substring(fromIndex + 7, toIndex).trim();
+                        to = details.substring(toIndex + 5).trim();
+                    } else {
+                        from = details.substring(fromIndex + 7).trim();
+                    }
                 }
-                String description = details.substring(0, fromIndex);
-                String from = details.substring(fromIndex + 7, toIndex);
-                String to = details.substring(toIndex + 5);
-                Task task = new Event(description, from, to);
-                tasks.add(task);
+
+                Event event = new Event(description, from, to);
+                tasks.add(event);
                 storage.save(tasks.getAll());
-                ui.showAdded(task, tasks.size());
+                return "Got it. I've added this task:\n  " + event +
+                        "\nNow you have " + tasks.size() + " tasks in the list.";
 
             } else if (input.startsWith("delete ")) {
-                String number = input.substring(7);
+                String number = input.substring(7).trim();
                 int index = Integer.parseInt(number) - 1;
                 Task task = tasks.remove(index);
                 storage.save(tasks.getAll());
-                ui.showDeleted(task, tasks.size());
+                return "Noted. I've removed this task:\n " + task +
+                        "\nNow you have " + tasks.size() + " tasks in the list.";
 
             } else {
-                ui.showError("I don't know that command!");
+                return "I don't know that command!";
             }
+        } catch (Exception e) {
+            return "Something went wrong: " + e.getMessage();
         }
     }
 }
