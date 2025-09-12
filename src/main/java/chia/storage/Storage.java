@@ -14,7 +14,9 @@ import chia.task.Todo;
 
 public class Storage {
 
-    /*handle case where data file does not exist at the start*/
+    /**
+     * handle case where data file does not exist at the start
+     **/
     public void save(List<Task> tasks) {
         try {
             File folder = new File("data");
@@ -34,7 +36,8 @@ public class Storage {
                     line = "D | " + (task.isDone() ? "1" : "0") + " | " + task.getDescription() + " | " + d.getByFile();
                 } else if (task instanceof Event) {
                     Event e = (Event) task;
-                    line = "E | " + (task.isDone() ? "1" : "0") + " | " + task.getDescription() + " | " + e.getFrom() + " | " + e.getTo();
+                    line = "E | " + (task.isDone() ? "1" : "0") + " | " + task.getDescription()
+                            + " | " + e.getFrom() + " | " + e.getTo();
                 }
 
                 writer.write(line + "\n");
@@ -84,7 +87,6 @@ public class Storage {
             scanner.close();
 
         } catch (IOException e) {
-
         }
 
         return tasks;
