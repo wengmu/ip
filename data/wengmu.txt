@@ -13,4 +13,4 @@ D | 0 | submit report | Friday
 E | 0 | team meeting | 2pm | 4pm
 T | 0 | read pubg
 T | 0 | make up for homework
-E | 0 | attend a ballroom party |  | 
+T | 0 | sleep
