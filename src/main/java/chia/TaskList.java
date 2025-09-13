@@ -28,6 +28,8 @@ public class TaskList {
      * Adds a task to the end of the task list.
      */
     public void add(Task task) {
+        assert task != null : "You cannot add a null task to the TaskList!";
+
         tasks.add(task);
     }
 
@@ -35,6 +37,9 @@ public class TaskList {
     Remove and return the task at specified index
      */
     public Task remove(int index) {
+        assert index >= 0 : "Reminder: Task index cannot be negative";
+        assert index < tasks.size() : "Task index out of bounds: " + index + ", Size: " + tasks.size();
+
         return tasks.remove(index);
     }
 
@@ -49,6 +54,9 @@ public class TaskList {
 
     // Return the task at a specified
     public Task get(int index) {
+        assert index >= 0 : "Reminder: Task index cannot be negative";
+        assert index < tasks.size() : "Task index out of bounds: " + index + ", Size: " + tasks.size();
+
         return tasks.get(index);
     }
 
@@ -58,6 +66,8 @@ public class TaskList {
     }
 
     public TaskList find(String keyword) {
+        assert keyword != null : "The search keyword cannot be null";
+
         List<Task> matchingTasks = new ArrayList<>();
         for (Task task: tasks) {
             if (task.getDescription().contains(keyword)) {
