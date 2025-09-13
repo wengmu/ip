@@ -7,10 +7,9 @@ T | 1 | buy groceries
 D | 0 | submit homework | 2024-12-01
 E | 0 | book club meeting | 2pm | 4pm
 T | 0 | party
-T | 1 | buy washing powder
 T | 0 | read book
 D | 0 | submit report | Friday
 E | 0 | team meeting | 2pm | 4pm
 T | 0 | read pubg
 T | 0 | make up for homework
-E | 0 | attend a ballroom party |  | 
+E | 0 | celebrate christmas |  | 

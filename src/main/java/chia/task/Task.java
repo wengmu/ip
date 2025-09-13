@@ -14,6 +14,9 @@ public class Task {
      * The task is initially marked as not done.
      */
     public Task(String description) {
+        assert description != null : "Aiyo, description cannot be null, my friend";
+        assert !description.trim().isEmpty() : "NOOOO, the description cannot be empty!!!";
+
         this.description = description;
         this.isDone = false;
     }
