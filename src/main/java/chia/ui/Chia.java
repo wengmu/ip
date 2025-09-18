@@ -184,7 +184,7 @@ public class Chia {
     private String handleTodo(String input) {
         String description = input.substring(TODO_LENGTH);
         if (description.isEmpty()) {
-            return "Hold up! The description cannot be empty so you SHALL NOT PASS!";
+            return "Please provide a todo description! Example: todo read book";
         }
 
         Task task = new Todo(description);
@@ -202,7 +202,7 @@ public class Chia {
     private String handleDeadline(String input) {
         String details = input.substring(DEADLINE_LENGTH).trim();
         if (details.isEmpty()) {
-            return "WAIT!!! The description is empty";
+            return "Please provide a deadline description! Example: deadline submit report /by 2024-12-01 2359";
         }
 
         int byIndex = details.indexOf(" /by ");
@@ -224,7 +224,7 @@ public class Chia {
     private String handleEvent(String input) {
         String details = input.substring(EVENT_LENGTH).trim();
         if (details.isEmpty()) {
-            return "The description of an event cannot be empty.";
+            return "Please provide an event description! Example: event meeting /from Mon 2pm /to Mon 4pm";
         }
 
         int fromIndex = details.indexOf(" /from ");
@@ -297,7 +297,7 @@ public class Chia {
             } else if (input.startsWith(FIND_TAG_COMMAND)) {
                 return handleFindTag(input);
             } else {
-                return "I don't know that command!";
+                return "Unknown command! Try: list, todo, deadline, event, mark, delete, tag, find-tag, or bye";
             }
         } catch (Exception e) {
             return "Something went wrong: " + e.getMessage();
