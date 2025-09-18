@@ -55,7 +55,13 @@ repositories {
 dependencies {
     String javaFxVersion = '17.0.7'
 
+    // Base JavaFX dependencies (no classifiers)
+    implementation "org.openjfx:javafx-controls:${javaFxVersion}"
+    implementation "org.openjfx:javafx-fxml:${javaFxVersion}"
+    implementation "org.openjfx:javafx-base:${javaFxVersion}"
+    implementation "org.openjfx:javafx-graphics:${javaFxVersion}"
 
+    // Platform-specific for runtime distribution
     implementation group: 'org.openjfx', name: 'javafx-base', version: javaFxVersion, classifier: 'win'
     implementation group: 'org.openjfx', name: 'javafx-base', version: javaFxVersion, classifier: 'mac'
     implementation group: 'org.openjfx', name: 'javafx-base', version: javaFxVersion, classifier: 'linux'

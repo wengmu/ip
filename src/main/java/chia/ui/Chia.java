@@ -2,10 +2,11 @@ package chia.ui;
 
 import chia.TaskList;
 import chia.storage.Storage;
-import chia.task.Task;
-import chia.task.Todo;
 import chia.task.Deadline;
 import chia.task.Event;
+import chia.task.Task;
+import chia.task.Todo;
+
 
 public class Chia {
     //command prefixes
@@ -82,7 +83,7 @@ public class Chia {
         String[] parts = details.split("\\s+");
 
         if (parts.length < 2) {
-            return "Please specify a task number and tags. Format: untag [number] #tag1 #tag2";
+            return "Please specify a task number and tags. Format: untag [number] #tag1";
         }
 
         int index = Integer.parseInt(parts[0]) - 1;

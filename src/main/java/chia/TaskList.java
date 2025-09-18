@@ -37,9 +37,9 @@ public class TaskList {
     Remove and return the task at specified index
      */
     public Task remove(int index) {
-        assert index >= 0 : "Reminder: Task index cannot be negative";
-        assert index < tasks.size() : "Task index out of bounds: " + index + ", Size: " + tasks.size();
-
+        if (index < 0 || index >= tasks.size()) {
+            throw new IndexOutOfBoundsException("Task index out of bounds: " + index + ", Size: " + tasks.size());
+        }
         return tasks.remove(index);
     }
 
@@ -55,8 +55,6 @@ public class TaskList {
     // Return the task at a specified
     public Task get(int index) {
         assert index >= 0 : "Reminder: Task index cannot be negative";
-        assert index < tasks.size() : "Task index out of bounds: " + index + ", Size: " + tasks.size();
-
         return tasks.get(index);
     }
 

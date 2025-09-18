@@ -17,11 +17,13 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) {
         try {
+            stage.setTitle("Chia");
+
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             stage.setScene(scene);
-            fxmlLoader.<MainWindow>getController().setChia(chia);  // inject the Chia instance
+            fxmlLoader.<MainWindow>getController().setChia(chia);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

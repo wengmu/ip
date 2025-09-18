@@ -1,3 +1,2 @@
-T | 0 | homework
-T | 0 | go out
-T | 0 | homework
+D | 0 | Submit project report | Dec 15 2024
+E | 1 | Team meeting | Mon 2pm | Mon 4pm
