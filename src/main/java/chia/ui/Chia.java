@@ -16,6 +16,9 @@ public class Chia {
     private static final String DELETE_COMMAND = "delete ";
     private static final String LIST_COMMAND = "list";
     private static final String BYE_COMMAND = "bye";
+    private static final String TAG_COMMAND = "tag ";
+    private static final String UNTAG_COMMAND = "untag ";
+    private static final String FIND_TAG_COMMAND = "find-tag ";
 
 
     //keyword length
@@ -28,6 +31,9 @@ public class Chia {
     private static final int DEADLINE_LENGTH = 9;
     private static final int EVENT_LENGTH = 6;
     private static final int DELETE_LENGTH = 7;
+    private static final int TAG_LENGTH = 4;
+    private static final int UNTAG_LENGTH = 6;
+    private static final int FIND_TAG_LENGTH = 9;
 
     private Storage storage;
     private TaskList tasks;
@@ -38,6 +44,99 @@ public class Chia {
         storage = new Storage();
         tasks = new TaskList(storage.load());
     }
+
+    /**
+     * Handles the tag command to add tags to existing tasks.
+     * @param input the full user input containing "tag", task number, and tags
+     * @return confirmation message with updated task
+     */
+    private String handleTag(String input) {
+        String details = input.substring(TAG_LENGTH).trim();
+        String[] parts = details.split("\\s+");
+
+        if (parts.length < 2) {
+            return "Please specify a task number and tags. Format: tag [number] #tag1";
+        }
+
+        int index = Integer.parseInt(parts[0]) - 1;
+        Task task = tasks.get(index);
+
+        for (int i = 1; i < parts.length; i++) {
+            if (parts[i].startsWith("#")) {
+                String tag = parts[i].substring(1);
+                task.addTag(tag);
+            }
+        }
+
+        storage.save(tasks.getAll());
+        return "Added tags to: " + task;
+    }
+
+    /**
+     * Handles the untag command to remove tags from existing tasks.
+     * @param input the full user input containing "untag", task number, and tags
+     * @return confirmation message with updated task
+     */
+    private String handleUntag(String input) {
+        String details = input.substring(UNTAG_LENGTH).trim();
+        String[] parts = details.split("\\s+");
+
+        if (parts.length < 2) {
+            return "Please specify a task number and tags. Format: untag [number] #tag1 #tag2";
+        }
+
+        int index = Integer.parseInt(parts[0]) - 1;
+        Task task = tasks.get(index);
+
+        for (int i = 1; i < parts.length; i++) {
+            if (parts[i].startsWith("#")) {
+                String tag = parts[i].substring(1);
+                task.removeTag(tag);
+            }
+        }
+        storage.save(tasks.getAll());
+        return "Removed tags from: " + task;
+    }
+
+    /**
+     * Handles the find-tag command to search tasks by tags.
+     * @param input the full user input containing "find-tag" and tag names
+     * @return list of matching tasks
+     */
+    private String handleFindTag(String input) {
+        String details = input.substring(FIND_TAG_LENGTH).trim();
+        String[] tagParts = details.split("\\s+");
+
+        StringBuilder result = new StringBuilder("Here are the matching tasks:\n");
+        int count = 0;
+
+        for (int i = 0; i < tasks.size(); i++) {
+            Task task = tasks.get(i);
+            boolean hasMatchingTag = false;
+
+            for (String tagPart : tagParts) {
+                if (tagPart.startsWith("#")) {
+                    String tag = tagPart.substring(1);
+                    if (task.hasTag(tag)) {
+                        hasMatchingTag = true;
+                        break;
+                    }
+                }
+            }
+
+            if (hasMatchingTag) {
+                result.append((i + 1)).append(". ").append(task).append("\n");
+                count++;
+            }
+        }
+
+        if (count == 0) {
+            return "No tasks found with the specified tags.";
+        }
+
+        return result.toString();
+    }
+
 
     /**
      * Handles the bye command to exit the program.
@@ -191,6 +290,12 @@ public class Chia {
                 return handleEvent(input);
             } else if (input.startsWith(DELETE_COMMAND)) {
                 return handleDelete(input);
+            } else if (input.startsWith(TAG_COMMAND)) {
+                return handleTag(input);
+            } else if (input.startsWith(UNTAG_COMMAND)) {
+                return handleUntag(input);
+            } else if (input.startsWith(FIND_TAG_COMMAND)) {
+                return handleFindTag(input);
             } else {
                 return "I don't know that command!";
             }

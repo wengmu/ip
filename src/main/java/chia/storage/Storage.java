@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 import chia.task.Deadline;
 import chia.task.Event;
@@ -68,12 +69,21 @@ public class Storage {
 
                     if (parts[0].equals("T")) {
                         task = new Todo(parts[2]);
+                        if (parts.length >= 4) {
+                            loadTags(task, parts[3]);
+                        }
 
                     } else if (parts[0].equals("D") && parts.length >= 4) {
                         task = new Deadline(parts[2], parts[3]);
+                        if (parts.length >= 5) {
+                            loadTags(task, parts[4]);
+                        }
 
                     } else if (parts[0].equals("E") && parts.length >= 5) {
                         task = new Event(parts[2], parts[3], parts[4]);
+                        if (parts.length >= 6) {
+                            loadTags(task, parts[5]);
+                        }
                     }
 
                     if (task != null) {
@@ -90,5 +100,19 @@ public class Storage {
         }
 
         return tasks;
+    }
+
+    /**
+     * Helper method to load tags from the tag string
+     */
+    private void loadTags(Task task, String tagString) {
+        if (tagString != null && !tagString.trim().isEmpty()) {
+            String[] tags = tagString.split(",");
+            for (String tag : tags) {
+                if (!tag.trim().isEmpty()) {
+                    task.addTag(tag.trim());
+                }
+            }
+        }
     }
 }
